@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CGPA Calculator</title>
+
+<style>
+:root{
+  --navy:#001f4d;
+  --accent:#ff0000;
+  --sky:#87ceeb;
+  --text-light:#ffffff;
+  --btn-bg:#28a745;
+}
+
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  height:100%;
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent 10%), url("latarbelakang.png");
+  background-size: cover;
+  background-position: center;
+  color: var(--text-light);
+  overflow-x:hidden;
+}
+
+/* Sidebar */
+.sidebar{
+  position:fixed; left:0; top:0;
+  width:200px; height:100vh;
+  background: var(--navy);
+  padding:28px 18px;
+  display:flex; flex-direction:column; gap:18px;
+  z-index:999;
+  transform:translateX(0); /* visible by default */
+}
+.logo img{width:100%; object-fit:contain;}
+.nav{display:flex; flex-direction:column; gap:8px;}
+.nav a{
+  color:white;
+  padding:8px 10px;
+  text-decoration:none;
+  border-radius:8px;
+  font-weight:600;
+}
+.nav a:hover{background:rgba(255,255,255,0.07);}
+
+/* Mobile menu button */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:1px; left:1px;
+  background:var(--navy);
+  color:white;
+  padding:10px 14px;
+  border-radius:8px;
+  font-size:22px;
+  border:none;
+  z-index:1000;
+}
+
+/* Header */
+.header-box{
+  margin-left:200px;
+  padding:18px 24px;
+  background: linear-gradient(90deg,var(--navy),var(--accent),var(--sky));
+  text-align:center;
+  transition:margin-left 0.3s ease;
+}
+.welcome{
+  font-family:'Algerian';
+  font-size:48px;
+  background:linear-gradient(90deg,var(--navy),var(--accent),var(--sky));
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:move 6s linear infinite;
+}
+@keyframes move{
+  0%{background-position:0%}
+  100%{background-position:400%}
+}
+
+/* Calculator Card */
+.calculator-container{
+  margin-left:200px;
+  margin-top:30px;
+  max-width:700px;
+  background:rgba(0,0,0,0.6);
+  padding:25px;
+  border-radius:12px;
+  backdrop-filter:blur(5px);
+  box-shadow:0 5px 20px rgba(0,0,0,0.4);
+  color:white;
+}
+
+table{
+  width:100%;
+  margin-top:15px;
+  border-collapse:collapse;
+}
+th,td{
+  border:1px solid #555;
+  padding:10px;
+  text-align:center;
+}
+input,select{
+  width:100%;
+  padding:7px;
+  background:#1e1e1e;
+  color:white;
+  border:1px solid #444;
+  border-radius:6px;
+}
+
+.btn{
+  margin-top:10px;
+  padding:10px 15px;
+  border:none;
+  cursor:pointer;
+  border-radius:8px;
+  font-size:16px;
+  color:white;
+}
+.add-btn{background:#007bff}
+.calc-btn{background:var(--btn-bg)}
+.clear-btn{background:#dc3545}
+.home-btn{background:#6c757d}
+
+.btn-row{
+  margin-top:10px;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.result{text-align:center; margin-top:20px; font-size:20px; font-weight:bold;}
+
+/* Responsive */
+@media(max-width:768px){
+  .sidebar{
+    transform:translateX(-220px);
+    width:180px;
+  }
+  .sidebar.show{
+    transform:translateX(0);
+  }
+  .menu-btn{display:block;}
+  .header-box{margin-left:0;padding:15px;}
+  .calculator-container{margin-left:0;width:90%;margin:auto;margin-top:25px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile menu button -->
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <a class="logo"><img src="icon.png" alt="Logo"></a>
+  <nav class="nav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="profile.html">Profile</a>
+    <a href="information.html">Information</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="setting.html">Settings</a>
+    <a href="login.html" style="background:red;text-align:center;border-radius:8px;text-decoration:underline;font-weight:600;">LOG OUT</a>
+  </nav>
+</aside>
+
+<!-- Header -->
+<header class="header-box">
+  <div class="welcome">CALCULATOR</div>
+</header>
+
+<!-- Calculator -->
+<div class="calculator-container">
+  <h2 style="text-align:center;">CGPA Calculator</h2>
+  <table id="courseTable">
+    <tr>
+      <th>Course</th>
+      <th>Credit Hours</th>
+      <th>Grade</th>
+    </tr>
+    <tr>
+      <td><input type="text" placeholder="Course Name"></td>
+      <td><input type="number" min="1" value="3"></td>
+      <td>
+        <select>
+          <option value="4.00">A / A+</option>
+          <option value="3.67">A-</option>
+          <option value="3.33">B+</option>
+          <option value="3.00">B</option>
+          <option value="2.67">B-</option>
+          <option value="2.33">C+</option>
+          <option value="2.00">C</option>
+          <option value="1.00">D</option>
+          <option value="0.00">F</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+
+  <button class="btn add-btn" onclick="addRow()">+ Add Course</button>
+  <button class="btn calc-btn" onclick="calculateCGPA()">Calculate CGPA</button>
+
+  <div class="btn-row">
+    <button class="btn clear-btn" onclick="clearAll()">Clear</button>
+    <button class="btn home-btn" onclick="window.location.href='dashboard.html'">Home</button>
+  </div>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+function toggleMenu(){
+  const sidebar = document.getElementById("sidebar");
+  sidebar.classList.toggle("show");
+}
+
+function addRow() {
+  let table = document.getElementById("courseTable");
+  let row = table.insertRow(-1);
+  row.innerHTML = `
+    <td><input type="text" placeholder="Course Name"></td>
+    <td><input type="number" min="1" value="3"></td>
+    <td>
+      <select>
+        <option value="4.00">A / A+</option>
+        <option value="3.67">A-</option>
+        <option value="3.33">B+</option>
+        <option value="3.00">B</option>
+        <option value="2.67">B-</option>
+        <option value="2.33">C+</option>
+        <option value="2.00">C</option>
+        <option value="1.00">D</option>
+        <option value="0.00">F</option>
+      </select>
+    </td>`;
+}
+
+function calculateCGPA() {
+  let table = document.getElementById("courseTable");
+  let totalPoints = 0, totalCredits = 0;
+  for(let i=1;i<table.rows.length;i++){
+    let credit = parseFloat(table.rows[i].cells[1].querySelector("input").value);
+    let grade = parseFloat(table.rows[i].cells[2].querySelector("select").value);
+    totalCredits += credit;
+    totalPoints += credit*grade;
+  }
+  let cgpa = totalPoints/totalCredits;
+  document.getElementById("result").innerHTML = "Total Credits: "+totalCredits+"<br>Your CGPA: "+cgpa.toFixed(2);
+}
+
+function clearAll() {
+  document.getElementById("courseTable").innerHTML = `
+    <tr>
+      <th>Course</th>
+      <th>Credit Hours</th>
+      <th>Grade</th>
+    </tr>
+    <tr>
+      <td><input type="text" placeholder="Course Name"></td>
+      <td><input type="number" min="1" value="3"></td>
+      <td>
+        <select>
+          <option value="4.00">A / A+</option>
+          <option value="3.67">A-</option>
+          <option value="3.33">B+</option>
+          <option value="3.00">B</option>
+          <option value="2.67">B-</option>
+          <option value="2.33">C+</option>
+          <option value="2.00">C</option>
+          <option value="1.00">D</option>
+          <option value="0.00">F</option>
+        </select>
+      </td>
+    </tr>`;
+  document.getElementById("result").innerHTML = "";
+}
+</script>
+
+</body>
+</html>

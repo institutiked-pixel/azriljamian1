@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - CGPA Calculator</title>
+<style>
+  body {
+    font-family: "Inter", sans-serif;
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: 
+      linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+      url("latarbelakang.png");
+    background-size: cover;
+    background-position: center top;
+    color:#fff;
+  }
+
+  .login-box{
+    background: rgba(30,30,30,0.85);
+    padding:30px;
+    border-radius:12px;
+    width:320px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    text-align:center;
+  }
+
+  .login-logo img{
+    width:200px;
+    height:100;
+    margin-bottom:10px;
+  }
+
+  .login-title{
+    font-size:16px;
+    margin-bottom:20px;
+    font-weight:600;
+    color:#bfe9ff;
+  }
+
+  h2{
+    margin-bottom:20px;
+    font-size:24px;
+  }
+
+  input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:6px;
+    border:1px solid #555;
+    background:#1e1e1e;
+    color:#fff;
+  }
+
+  button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:#28a745;
+    color:#fff;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:600;
+  }
+  button:hover{opacity:0.85;}
+</style>
+</head>
+<body>
+<div class="login-box">
+  <!-- Logo & University Name -->
+  <div class="login-logo">
+    <img src="icon.png" alt="Logo">
+  </div>
+  <div class="login-title">Universiti Pertahanan Nasional Malaysia</div>
+
+  <!-- Login Form -->
+  <h2>Login</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<script>
+function login(){
+  const user = document.getElementById('username').value;
+  const pass = document.getElementById('password').value;
+
+  // demo check (default: user / 123)
+  if(user==='user' && pass==='123'){
+    localStorage.setItem('loggedIn', 'true');
+    alert('Login successful!');
+    window.location.href = 'DashBoard.html';
+  } else {
+    alert('Incorrect username or password!');
+  }
+}
+</script>
+</body>
+</html>

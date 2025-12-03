@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Information</title>
+
+<style>
+:root{
+    --navy:#001f4d;
+    --accent:#ff0000;
+    --sky:#87ceeb;
+    --text-light:#ffffff;
+}
+
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family: "Inter", sans-serif;
+    color: var(--text-light);
+    background:
+        linear-gradient(to bottom, rgba(0,0,0,0.6), transparent 10%),
+        url("latarbelakang.png");
+    background-size:cover;
+    background-position:center;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* Sidebar */
+.sidebar{
+    position:fixed;
+    top:0; left:0;
+    width:200px;
+    height:100vh;
+    background: var(--navy);
+    padding:28px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    transition: transform 0.3s ease;
+    z-index:999;
+}
+.sidebar.hide{transform:translateX(-100%);}
+.logo img{width:100%;object-fit:contain;}
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+.nav a{
+    color:white;
+    padding:8px 10px;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:600;
+}
+.nav a:hover{background:rgba(255,255,255,0.1);}
+
+/* Mobile menu button */
+.menu-btn{
+    display:none;
+    position:fixed;
+    top:1px;
+    left:1px;
+    background:var(--navy);
+    color:white;
+    padding:10px 14px;
+    border-radius:8px;
+    font-size:22px;
+    border:none;
+    z-index:1000;
+}
+
+/* Header */
+.header-box{
+    margin-left:200px;
+    padding:25px;
+    background: linear-gradient(90deg,var(--navy),var(--accent),var(--sky));
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,0.4);
+    transition:margin-left 0.3s ease;
+}
+.header-box h1{
+    font-family:'Algerian', serif;
+    font-size:48px;
+    background:linear-gradient(90deg,var(--navy),var(--accent),var(--sky));
+    background-size:400%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation: move 6s linear infinite;
+}
+.header-box p{margin-top:10px;}
+
+@keyframes move{
+    0%{background-position:0%}
+    100%{background-position:400%}
+}
+
+/* Content box */
+.content-box{
+    margin-left:200px;
+    margin-top:30px;
+    max-width:900px;
+    background:rgba(0,0,0,0.6);
+    padding:25px;
+    border-radius:12px;
+    backdrop-filter:blur(5px);
+    transition: margin-left 0.3s ease;
+}
+h2{margin-top:20px;color:#00d4ff;}
+p{margin-top:10px;line-height:1.6;}
+ul{margin-top:10px;padding-left:20px;}
+ul li{margin-bottom:7px;}
+
+/* Responsive */
+@media(max-width:768px){
+    .sidebar.hide{transform:translateX(-100%);}
+    .menu-btn{display:block;}
+    .header-box{margin-left:0;padding:15px;}
+    .content-box{margin-left:0;width:95%;margin:auto;margin-top:25px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile menu button -->
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<!-- Sidebar -->
+<aside class="sidebar hide" id="sidebar">
+    <a class="logo"><img src="icon.png"></a>
+    <nav class="nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="information.html">Information</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="setting.html">Settings</a>
+        <a href="login.html" style="background:red;text-align:center;border-radius:8px;text-decoration:underline;font-weight:600;">LOG OUT</a>
+    </nav>
+</aside>
+
+<!-- Header -->
+<header class="header-box">
+    <h1>INFORMATION</h1>
+    <p>Your guide to using the CGPA Calculator system</p>
+</header>
+
+<!-- Content -->
+<div class="content-box">
+
+    <h2>1. About This System</h2>
+    <p>The CGPA Calculator is a simple, fast and user-friendly web system designed to help students calculate their semester GPA and overall CGPA.</p>
+
+    <h2>2. How to Use the Calculator</h2>
+    <ul>
+        <li>Go to the Calculator page from the sidebar.</li>
+        <li>Enter the course name, credit hours, and grade obtained.</li>
+        <li>Click <b>+ Add Course</b> to add more subjects.</li>
+        <li>Press <b>Calculate CGPA</b> to see your results.</li>
+        <li>The system will display total credit hours and your CGPA.</li>
+    </ul>
+
+    <h2>3. CGPA Formula Used</h2>
+    <p><b>CGPA = Total Grade Points / Total Credit Hours</b><br>Grade Points = Credit Hours × Grade Value</p>
+
+    <h2>4. Notes</h2>
+    <ul>
+        <li>Your data is not stored on a server — all calculations are done locally in your browser.</li>
+        <li>The grade scale follows common university standards.</li>
+        <li>Always verify your official results with your university’s academic system.</li>
+    </ul>
+
+    <h2>5. Contact & Support</h2>
+    <ul>
+        <li>Email: azriljamian1@gmail.com</li>
+        <li>Phone: +6017-6058814</li>
+    </ul>
+
+    <h2>6. Version & Updates</h2>
+    <ul>
+        <li>Version 1.0 – Initial release</li>
+        <li>Version 1.1 – UI improvements and background enhancements</li>
+        <li>Version 1.2 – Added CGPA formula and user guide</li>
+    </ul>
+
+</div>
+
+<script>
+function toggleMenu(){
+    document.getElementById("sidebar").classList.toggle("hide");
+}
+</script>
+
+</body>
+</html>
